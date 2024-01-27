@@ -3,7 +3,7 @@ import plotly.graph_objects as go
 import streamlit as st
 import pandas as pd
 
-st.write("# Our charts rule!")
+st.write("# Welcome to the Salaries dashboard")
 
 # Read the CSV dataset
 df = pd.read_csv('../data/ds_salaries.csv', converters={'work_year': pd.to_datetime},
@@ -14,11 +14,8 @@ df = pd.read_csv('../data/ds_salaries.csv', converters={'work_year': pd.to_datet
 df['work_year'] = pd.to_datetime(df['work_year'], format='%Y')
 
 # Replace employment type abbreviations with full names
-df['employment_type'].cat.rename_categories({'FT': 'Full-Time',
-                                             'CT': 'Contractual',
-                                             'PT': 'Part-Time',
-                                             'FL': 'Freelancer'},
-                                            inplace=True)
+df['employment_type'] = df['employment_type'].cat.rename_categories({'FT': 'Full-Time', 'CT': 'Contractual', 'PT': 'Part-Time', 'FL': 'Freelancer', 'SE' : 'Self-Employed'})
+
 
 # Display the dataframe
 st.write("## Here's our dataset 📈")
@@ -175,7 +172,7 @@ fig.update_layout(
 st.plotly_chart(fig)
 
 # Create the treemap chart
-st.write("### And Treemap is a winner (IMHO)")
+st.write("### And Treemap is a winner")
 fig = px.treemap(job_title_counts, path=['job_title'], values='frequency',
                  title='Job Title Frequency (Treemap Chart)',
                  color_discrete_sequence=px.colors.qualitative.Pastel)
@@ -186,7 +183,7 @@ st.plotly_chart(fig)
 # Calculate the correlation matrix
 st.write("### Now, what about the relationship between salary and remote-work?")
 st.write("##### Surely, salary and remote-work have a positive correlation indicating a trend of DS professionals working from home.    ")
-correlation_matrix = df[['experience_level', 'salary_in_usd', 'salary', 'remote_ratio']].corr()
+correlation_matrix = df[['salary_in_usd', 'salary', 'remote_ratio']].dropna().corr()
 
 # Create the correlation heatmap
 fig = px.imshow(correlation_matrix,
