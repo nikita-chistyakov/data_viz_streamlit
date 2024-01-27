@@ -16,5 +16,5 @@ Analyzing this dashboard empowers users to identify trends in salary progression
 
 During the project, we encountered challenges related to data formatting and labeling. However, we successfully overcame these obstacles by implementing effective solutions.
 
-For example, we renamed all countries abbreviations with full names ('FR' : 'France') as country_code_to_name
-To handle missing values, we used the dropna() method
+For example, we renamed all countries abbreviations with full names ('FR' : 'France') as country_code_to_name.
+To handle missing values, we used the dropna() method.
